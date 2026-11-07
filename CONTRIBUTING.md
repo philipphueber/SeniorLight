@@ -12,7 +12,7 @@ together is in [ARCHITECTURE.md](ARCHITECTURE.md).
   AndroidX, Kotlin, Compose or third-party libraries. `testImplementation` of
   JUnit is the only exception.
 - **Use the platform.** The light goes through `CameraManager.setTorchMode`, the
-  same switch as the system flashlight tile, and the widget always shows the
+  same switch as the system flashlight tile, and the app icon always shows the
   state the system reports.
 - **English and German.** Every user-visible string goes in both
   `res/values/strings.xml` and `res/values-de/strings.xml`.

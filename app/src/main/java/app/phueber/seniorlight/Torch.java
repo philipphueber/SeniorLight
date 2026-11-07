@@ -98,15 +98,15 @@ final class Torch {
         }
     }
 
-    /** Last known state, used to draw the widget before the system has reported. */
+    /** Last known state, used when the system does not report one in time. */
     static boolean isOn(Context ctx) {
         return ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_ON, false);
     }
 
-    /** Stores the state and redraws every widget to match. */
+    /** Stores the state and makes the app icon show it. */
     static void remember(Context ctx, boolean on) {
         ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(KEY_ON, on).apply();
-        LightWidget.updateAll(ctx, on);
+        AppIcon.show(ctx, on);
     }
 
     private static void toast(Context app, int res) {

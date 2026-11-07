@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Plain launcher icon: dark flashlight on a yellow disc. Content stays inside the
-     66dp safe zone of the 108dp canvas. Material "flashlight_on" shape, scaled. -->
+<!-- Launcher icon, light off: white crossed-out flashlight on a dark grey disc.
+     Material "flashlight_off" shape, scaled into the 66dp safe zone. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
     <path
-        android:fillColor="#FFC107"
+        android:fillColor="#424242"
         android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0" />
     <group android:translateX="30" android:translateY="30" android:scaleX="2" android:scaleY="2">
         <path
-            android:fillColor="#1C1B19"
-            android:pathData="M6,2h12v3H6zM6,7v1l2,3v11h8V11l2,-3V7H6zM12,15.5c-0.83,0 -1.5,-0.67 -1.5,-1.5s0.67,-1.5 1.5,-1.5 1.5,0.67 1.5,1.5 -0.67,1.5 -1.5,1.5z" />
+            android:fillColor="#FFFFFF"
+            android:pathData="M18,5V2H6v1.17L7.83,5zM16,11l2,-3V7H9.83L16,13.17zM2.81,2.81L1.39,4.22 8,10.83V22h8v-3.17l3.78,3.78 1.41,-1.41z" />
     </group>
 </vector>

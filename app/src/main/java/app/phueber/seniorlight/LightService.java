@@ -40,9 +40,10 @@ public final class LightService extends Service {
         NotificationManager nm = getSystemService(NotificationManager.class);
         NotificationChannel ch = new NotificationChannel(CHANNEL, getString(R.string.app_name),
                 NotificationManager.IMPORTANCE_LOW); // silent: it is a status, not an alert
+        ch.setShowBadge(false); // the icon already shows the state; no dot on it
         nm.createNotificationChannel(ch);
 
-        PendingIntent off = LightWidget.toggleIntent(this);
+        PendingIntent off = ToggleReceiver.intent(this);
         Notification n = new Notification.Builder(this, CHANNEL)
                 .setSmallIcon(R.drawable.ic_flashlight_on)
                 .setContentTitle(getString(R.string.notification_on))

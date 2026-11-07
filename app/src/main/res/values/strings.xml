@@ -3,9 +3,6 @@
     <string name="app_name">Flashlight</string>
     <string name="no_flash">This phone has no flashlight.</string>
     <string name="busy">The flashlight cannot be switched right now. Another app is using the camera.</string>
-    <string name="light_on">Flashlight is on. Tap to turn it off.</string>
-    <string name="light_off">Flashlight is off. Tap to turn it on.</string>
-    <string name="widget_description">Tap to switch the flashlight on or off.</string>
     <string name="notification_on">Flashlight is on</string>
     <string name="turn_off">Turn off</string>
 </resources>

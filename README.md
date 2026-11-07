@@ -12,20 +12,16 @@ English and German. The app follows the phone's language.
 ## What you see
 
 <p>
-  <img src="docs/screenshots/widget-off-on.png" width="70%" alt="Home screen with the flashlight button: dark grey with a crossed-out flashlight when off, yellow with a flashlight when on">
+  <img src="docs/screenshots/icon-off-on.png" width="45%" alt="The app icon: dark grey with a crossed-out flashlight when the light is off, yellow with a flashlight when it is on">
 </p>
 
-A round button on the home screen, the size of an app icon:
+Just the app icon, which shows whether the light is on:
 
 - **Dark grey with a crossed-out flashlight:** the light is off. Tap to turn it on.
 - **Yellow with a flashlight:** the light is on. Tap to turn it off.
 
-The button always shows the real state, also when the light was switched in the
-phone's quick settings.
-
-The app also has a normal app icon (a flashlight on yellow) in the app list.
-Tapping it switches the light too, but that icon always looks the same: Android
-does not let an app change its own icon. That is why the round button exists.
+The icon also follows the light when it is switched in the phone's quick
+settings, and shows "off" again after the phone restarts.
 
 ## Install
 
@@ -39,15 +35,14 @@ Needs Android 8.0 or newer and a phone with a flash.
 
 ## Setting it up (for the helper)
 
-Put the round button on the home screen, where it is easy to find:
+Put the **Flashlight** icon on the home screen where it is easy to find: open the
+app list, touch and hold **Flashlight** and drag it onto the home screen.
 
-1. Touch and hold an empty spot on the home screen.
-2. Tap **Widgets**.
-3. Find **Flashlight** (search for it if the list is long), tap it and tap
-   **Add**, or drag it onto the home screen.
+That is all. Tap it once to check that the light comes on and the icon turns
+yellow, and again to turn it off.
 
-That is all. Tap it once to check that the light comes on, and again to turn it
-off.
+The icon change was tested with the Pixel home screen on Android 11 and 15.
+Other phone makers' home screens may take a moment to redraw it.
 
 ## Good to know
 
@@ -83,19 +78,14 @@ Deutsch und Englisch. Die App folgt der Sprache des Telefons.
 
 Bild siehe [oben](#what-you-see).
 
-Ein runder Knopf auf dem Startbildschirm, so groß wie ein App-Symbol:
+Nur das App-Symbol, und es zeigt, ob das Licht an ist:
 
 - **Dunkelgrau mit durchgestrichener Taschenlampe:** das Licht ist aus. Tippen
   schaltet es ein.
 - **Gelb mit Taschenlampe:** das Licht ist an. Tippen schaltet es aus.
 
-Der Knopf zeigt immer den echten Zustand, auch wenn das Licht in den
-Schnelleinstellungen des Telefons geschaltet wurde.
-
-In der App-Liste gibt es außerdem ein normales App-Symbol (Taschenlampe auf
-Gelb). Tippen darauf schaltet das Licht ebenfalls, aber dieses Symbol sieht immer
-gleich aus: Android erlaubt einer App nicht, ihr eigenes Symbol zu ändern. Darum
-gibt es den runden Knopf.
+Das Symbol folgt dem Licht auch, wenn es in den Schnelleinstellungen des Telefons
+geschaltet wurde, und zeigt nach einem Neustart wieder „aus“.
 
 ## Installieren
 
@@ -109,15 +99,16 @@ Benötigt Android 8.0 oder neuer und ein Telefon mit Blitz.
 
 ## Einrichten (für die helfende Person)
 
-Den runden Knopf gut sichtbar auf den Startbildschirm legen:
+Das Symbol **Taschenlampe** gut sichtbar auf den Startbildschirm legen: die
+App-Liste öffnen, **Taschenlampe** gedrückt halten und auf den Startbildschirm
+ziehen.
 
-1. Eine freie Stelle auf dem Startbildschirm gedrückt halten.
-2. **Widgets** antippen.
-3. **Taschenlampe** suchen, antippen und **Hinzufügen** antippen oder auf den
-   Startbildschirm ziehen.
+Das ist alles. Einmal antippen und prüfen, dass das Licht angeht und das Symbol
+gelb wird, dann noch einmal zum Ausschalten.
 
-Das ist alles. Einmal antippen und prüfen, dass das Licht angeht, dann noch
-einmal zum Ausschalten.
+Der Symbolwechsel wurde mit dem Pixel-Startbildschirm unter Android 11 und 15
+getestet. Startbildschirme anderer Hersteller brauchen eventuell einen Moment,
+bis sie ihn zeigen.
 
 ## Gut zu wissen
 

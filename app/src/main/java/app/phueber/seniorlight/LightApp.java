@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 /**
- * Keeps the widget in step with the real light while the app's process is alive,
+ * Keeps the app icon in step with the real light while the app's process is alive,
  * including when the light is switched from the quick settings or turned off by
  * the system.
  */

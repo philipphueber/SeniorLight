@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # One on-device check: tapping the app icon switches the flashlight on, tapping it
-# again switches it off, and the keep-alive service runs exactly while it is on.
+# again switches it off, the icon shows the state (the matching launcher entry is
+# the active one), and the keep-alive service runs exactly while it is on.
 # Reads the torch state from the camera service's log, so it checks the real light.
 #
 # Usage: scripts/smoke.sh [adb-serial]     (needs a device or emulator with a flash)
@@ -31,10 +32,17 @@ tap() { # tap the app icon, then report "on"/"off" from the camera service log
   esac
 }
 svc() { SH dumpsys activity services $PKG | grep -c 'ServiceRecord.*LightService'; }
+icon() { # which launcher entry Android offers now: IconOn or IconOff
+  SH cmd package query-activities --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER $PKG \
+    | grep -o 'Icon\(On\|Off\)' | tr '\n' ' ' | sed 's/ $//'; }
+
+[ "$(icon)" = IconOff ] && pass "fresh install: icon shows off" || fail "fresh install icon is '$(icon)'"
 
 [ "$(tap)" = on ] && pass "first tap: light on" || fail "first tap did not turn the light on"
+[ "$(icon)" = IconOn ] && pass "icon shows on" || fail "icon is '$(icon)' while the light is on"
 [ "$(svc)" = 1 ] && pass "keep-alive service running" || fail "service not running while on"
 [ "$(tap)" = off ] && pass "second tap: light off" || fail "second tap did not turn the light off"
+[ "$(icon)" = IconOff ] && pass "icon shows off" || fail "icon is '$(icon)' while the light is off"
 sleep 1
 [ "$(svc)" = 0 ] && pass "service stopped" || fail "service still running while off"
 echo "ALL PASS"
