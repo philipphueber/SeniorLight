@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget face, light off: a disc with the flashlight in the middle. Shown with
+     fitCenter, so it stays round whatever shape the home-screen cell has. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#FF424242" />
+            <size android:width="96dp" android:height="96dp" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_flashlight_off"
+        android:left="22dp" android:top="22dp" android:right="22dp" android:bottom="22dp" />
+</layer-list>

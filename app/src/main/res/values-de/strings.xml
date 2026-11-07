@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Taschenlampe</string>
+    <string name="no_flash">Dieses Telefon hat keine Taschenlampe.</string>
+    <string name="busy">Die Taschenlampe lässt sich gerade nicht schalten. Eine andere App benutzt die Kamera.</string>
+    <string name="light_on">Taschenlampe ist an. Tippen zum Ausschalten.</string>
+    <string name="light_off">Taschenlampe ist aus. Tippen zum Einschalten.</string>
+    <string name="widget_description">Tippen schaltet die Taschenlampe an oder aus.</string>
+    <string name="notification_on">Taschenlampe ist an</string>
+    <string name="turn_off">Ausschalten</string>
+</resources>
