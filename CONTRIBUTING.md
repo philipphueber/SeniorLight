@@ -59,6 +59,19 @@ tests are unaffected.
 3. Check that the output is `app/build/outputs/apk/release/SeniorLight-<version>-release.apk`.
    An `-unsigned` name means signing was not configured.
 4. Verify the signature with `apksigner verify --print-certs <apk>` against the
-   certificate SHA-256 in the latest release notes.
+   release certificate below. A different certificate means the wrong key: do
+   not publish.
 5. Tag `v<version>` and attach the APK to a GitHub release, renamed to
-   `SeniorLight-<version>.apk`.
+   `SeniorLight-<version>.apk`. The release notes are for the people using the
+   app: what changed for them, in plain words, in English and German. Technical
+   detail (signing, checksums, internals) stays in this file and in
+   ARCHITECTURE.md; the same goes for the README.
+
+### Release certificate
+
+Every release is signed with this key (`CN=SeniorLight, C=DE`); `apksigner` must
+print exactly:
+
+    Signer #1 certificate SHA-256 digest: 0a0c7d826f8a45746c7697d65399ea943a61773f8aee9325d867d361a4e4b988
+
+To check a downloaded APK: `apksigner verify --print-certs SeniorLight-<version>.apk`.
