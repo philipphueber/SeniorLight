@@ -5,7 +5,7 @@
     <!-- CameraManager.setTorchMode needs no permission, and the app never opens the
          camera. All three below are install-time permissions (no prompt):
          LightService keeps the process alive while the light is on, and
-         BootReceiver resets the icon to "off" after a restart. -->
+         BootReceiver resets the icon and widget to "off" after a restart. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -55,6 +55,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+
+        <!-- The home-screen widget: same face as the app icon, a tap switches. -->
+        <receiver
+            android:name=".LightWidget"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/light_widget" />
+        </receiver>
 
         <receiver
             android:name=".ToggleReceiver"

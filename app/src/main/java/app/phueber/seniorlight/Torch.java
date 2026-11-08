@@ -103,10 +103,11 @@ final class Torch {
         return ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_ON, false);
     }
 
-    /** Stores the state and makes the app icon show it. */
+    /** Stores the state and makes the app icon and every widget show it. */
     static void remember(Context ctx, boolean on) {
         ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(KEY_ON, on).apply();
         AppIcon.show(ctx, on);
+        LightWidget.updateAll(ctx, on);
     }
 
     private static void toast(Context app, int res) {

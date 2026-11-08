@@ -44,6 +44,11 @@ yellow, and again to turn it off.
 The icon change was tested with the Pixel home screen on Android 11 and 15.
 Other phone makers' home screens may take a moment to redraw it.
 
+**If the icon does not change colour** on this phone, use the **Flashlight**
+widget instead. It looks and works the same: touch and hold an empty spot on
+the home screen, choose **Widgets**, find **Flashlight** and drag it onto the
+home screen. The widget can also be made bigger.
+
 ## Good to know
 
 - While the light is on, Android may show a small "Flashlight is on" notification
@@ -109,6 +114,12 @@ gelb wird, dann noch einmal zum Ausschalten.
 Der Symbolwechsel wurde mit dem Pixel-Startbildschirm unter Android 11 und 15
 getestet. Startbildschirme anderer Hersteller brauchen eventuell einen Moment,
 bis sie ihn zeigen.
+
+**Wenn das Symbol seine Farbe nicht wechselt,** auf diesem Telefon stattdessen
+das Widget **Taschenlampe** verwenden. Es sieht genauso aus und funktioniert
+genauso: eine freie Stelle auf dem Startbildschirm gedrückt halten,
+**Widgets** wählen, **Taschenlampe** suchen und auf den Startbildschirm ziehen.
+Das Widget lässt sich auch größer ziehen.
 
 ## Gut zu wissen
 

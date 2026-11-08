@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-/** Target of the notification's Turn off: switches the light like a tap on the icon. */
+/** Target of the widget and of the notification's Turn off: switches the light like a tap on the icon. */
 public final class ToggleReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context ctx, Intent intent) {
