@@ -46,11 +46,26 @@ final class Torch {
      * the quick settings), then runs {@code done}. Always runs {@code done}.
      */
     static void toggle(Context ctx, Runnable done) {
+        switchTo(ctx, null, done);
+    }
+
+    /**
+     * Switches the light on ({@code want} true), off (false) or to the opposite of
+     * what it really is now (null, see {@link #toggle}), then runs {@code done}.
+     * Always runs {@code done}. Taps and automation commands all come through here,
+     * so the icon, widget and service follow the same way.
+     */
+    static void switchTo(Context ctx, Boolean want, Runnable done) {
         Context app = ctx.getApplicationContext();
         CameraManager cm = app.getSystemService(CameraManager.class);
         String id = cm == null ? null : cameraId(cm);
         if (id == null) {
             toast(app, R.string.no_flash);
+            done.run();
+            return;
+        }
+        if (want != null) { // no need to ask the system what it is now
+            set(app, cm, id, want);
             done.run();
             return;
         }

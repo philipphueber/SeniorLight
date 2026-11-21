@@ -11,8 +11,10 @@ the same face does the same, for launchers that do not redraw the swapped icon.
 | `Torch` | The light, through the platform torch API (`CameraManager.setTorchMode`). Picks the camera, asks the system for the *real* current state (a `TorchCallback` reports it on registration) and switches to the opposite, so the result is right even after a change in quick settings. Remembers the last state and hands it to `AppIcon` and `LightWidget`. |
 | `AppIcon` | Shows the state on the app icon by enabling exactly one of two launcher entries (see below). |
 | `CameraPick` | Pure: which camera's flash to use (back camera first, else any flash, else none). Unit tested. |
-| `ToggleActivity` | Behind the app icon (both launcher entries are aliases of it). Invisible (translucent, no animation): switches the light and finishes. |
+| `ToggleActivity` | Behind the app icon (both launcher entries are aliases of it). Invisible (translucent, no animation): switches the light and finishes. Also takes the three automation actions as an activity start. |
 | `LightWidget` | Optional home-screen widget: one disc showing `ic_launcher_on`/`ic_launcher_off`, a tap goes to `ToggleReceiver`. Redrawn whenever `Torch` remembers a new state; never on a timer (`updatePeriodMillis="0"`). |
+| `AutomationReceiver` | Exported; takes `LIGHT_ON`/`LIGHT_OFF`/`LIGHT_TOGGLE` broadcasts from automation apps and calls `Torch.switchTo`, via `goAsync()`. See "Automation". |
+| `Automation` | Pure: the action names and which command (on/off/toggle) an action stands for, lenient about case and spaces. Unit tested. |
 | `ToggleReceiver` | Target of the widget and of the notification's Turn off; same toggle, via `goAsync()`. |
 | `BootReceiver` | After a restart the light is off: puts the icon and widget back to "off". |
 | `LightService` | Foreground service (type `specialUse`) that runs only while the light is on. See below. |
@@ -40,6 +42,33 @@ A tap on the widget is a broadcast, not an activity start. Starting
 `LightService` from it is still allowed on Android 12+, because the system
 exempts widget clicks from the background-start limits (tested on an Android 15
 emulator: light on, service running, widget and icon both "on").
+
+## Automation
+
+Automation apps (Trigly, Tasker, ...) send `app.phueber.seniorlight.action.LIGHT_ON`,
+`LIGHT_OFF` or `LIGHT_TOGGLE`, no extras.
+
+- **Broadcasts first**, to the exported `AutomationReceiver`: they need no
+  permission on the sender's side and no foreground. Senders name the package,
+  which manifest receivers accept on API 26+.
+- **Same path as a tap.** `Torch.switchTo(want)` is what `toggle` now calls with
+  `want = null`; ON/OFF skip asking the system for the current state and set it
+  directly. `remember` then redraws the icon and widget, and `LightService` is
+  started or stopped, exactly as for a tap.
+- **The foreground-service limit.** A broadcast from a background app does not
+  exempt the receiver from Android 12+'s background start limit, so
+  `LightService` cannot start (`startForegroundService() not allowed`, seen on
+  the Android 15 emulator; `LightService.start` swallows it). The light still
+  comes on, but is not protected from process death. Therefore
+  `ToggleActivity` also has an intent filter for the same three actions: an
+  activity start puts the app in the foreground for a moment, so the service
+  starts. Trigly needs its overlay permission to start activities from the
+  background.
+- **Stopped state.** Android delivers no broadcasts to an app that was never
+  opened or was force-stopped; the README tells the helper to tap it once.
+- **No guard.** Switching the torch needs no permission, so the receiver is
+  exported without one; it adds nothing an app could not already do with
+  `CameraManager`.
 
 ## Why a foreground service
 

@@ -29,7 +29,16 @@
             android:excludeFromRecents="true"
             android:noHistory="true"
             android:taskAffinity=""
-            android:theme="@style/Invisible" />
+            android:theme="@style/Invisible">
+            <!-- Automation as an activity start: unlike a background broadcast, this may
+                 start LightService, so the light is protected from process death. -->
+            <intent-filter>
+                <action android:name="app.phueber.seniorlight.action.LIGHT_ON" />
+                <action android:name="app.phueber.seniorlight.action.LIGHT_OFF" />
+                <action android:name="app.phueber.seniorlight.action.LIGHT_TOGGLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- The app icon, once per state. AppIcon enables exactly one, so the icon
              shows whether the light is on. A fresh install starts with "off". -->
@@ -72,6 +81,18 @@
         <receiver
             android:name=".ToggleReceiver"
             android:exported="false" />
+        <!-- Automation (Trigly, Tasker, ...): light on/off/toggle as explicit broadcasts.
+             Exported on purpose; switching the torch needs no permission anyway. -->
+        <receiver
+            android:name=".AutomationReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="app.phueber.seniorlight.action.LIGHT_ON" />
+                <action android:name="app.phueber.seniorlight.action.LIGHT_OFF" />
+                <action android:name="app.phueber.seniorlight.action.LIGHT_TOGGLE" />
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".BootReceiver"
             android:exported="true">

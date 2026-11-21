@@ -56,6 +56,32 @@ home screen. The widget can also be made bigger.
 - If the camera is in use (for example during a video call), the light cannot be
   switched. The phone then says so.
 
+## Automation (Trigly, Tasker, …)
+
+Other apps can switch the light, for example Trigly or Tasker. Each command is an
+intent for the package `app.phueber.seniorlight`, without extras. The icon, the
+widget and the notification follow exactly as after a tap.
+
+| Send mode | Action | Extras | What it does |
+|---|---|---|---|
+| Broadcast | `app.phueber.seniorlight.action.LIGHT_ON` | none | Light on |
+| Broadcast | `app.phueber.seniorlight.action.LIGHT_OFF` | none | Light off |
+| Broadcast | `app.phueber.seniorlight.action.LIGHT_TOGGLE` | none | Light on if off, off if on |
+| Activity start | the same three actions | none | The same, and the light is protected from Android ending the app (see below) |
+
+Prefer the broadcast. On Android 12 and newer, an app in the background may not
+start the small "Flashlight is on" service, so after a broadcast the light can
+go out if Android needs memory and ends the app. Sent as an activity start
+(Trigly needs its "display over other apps" permission for that), nothing is
+shown, and the light stays on reliably.
+
+The app must have been opened (tapped) once after installing; until then
+Android does not deliver broadcasts to it.
+
+**Example (Trigly):** action *Fire intent*, send mode *Broadcast*, action
+`app.phueber.seniorlight.action.LIGHT_ON`, package `app.phueber.seniorlight`.
+Combine it with a trigger such as "at sunset" or a button.
+
 ## Privacy
 
 The app has no internet access at all (it does not even ask for it), no
@@ -128,6 +154,32 @@ Das Widget lässt sich auch größer ziehen.
   von selbst ausgeht.
 - Wenn die Kamera benutzt wird (zum Beispiel bei einem Videoanruf), lässt sich das
   Licht nicht schalten. Das Telefon zeigt dann einen Hinweis.
+
+## Automatisierung (Trigly, Tasker, …)
+
+Andere Apps können das Licht schalten, zum Beispiel Trigly oder Tasker. Jeder
+Befehl ist ein Intent an das Paket `app.phueber.seniorlight`, ohne Extras. Symbol,
+Widget und Mitteilung folgen genau wie nach einem Tippen.
+
+| Sendeart | Aktion | Extras | Was passiert |
+|---|---|---|---|
+| Broadcast | `app.phueber.seniorlight.action.LIGHT_ON` | keine | Licht an |
+| Broadcast | `app.phueber.seniorlight.action.LIGHT_OFF` | keine | Licht aus |
+| Broadcast | `app.phueber.seniorlight.action.LIGHT_TOGGLE` | keine | Licht an, wenn aus; aus, wenn an |
+| Activity-Start | dieselben drei Aktionen | keine | Dasselbe, und das Licht ist davor geschützt, dass Android die App beendet (siehe unten) |
+
+Am besten den Broadcast nehmen. Ab Android 12 darf eine App im Hintergrund den
+kleinen Dienst „Taschenlampe ist an“ nicht starten; nach einem Broadcast kann
+das Licht deshalb ausgehen, wenn Android Speicher braucht und die App beendet.
+Als Activity-Start gesendet (Trigly braucht dafür die Berechtigung „Über anderen
+Apps einblenden“) erscheint nichts, und das Licht bleibt zuverlässig an.
+
+Die App muss nach der Installation einmal geöffnet (angetippt) worden sein;
+vorher stellt Android ihr keine Broadcasts zu.
+
+**Beispiel (Trigly):** Aktion *Intent senden*, Sendeart *Broadcast*, Aktion
+`app.phueber.seniorlight.action.LIGHT_ON`, Paket `app.phueber.seniorlight`.
+Mit einem Auslöser wie „bei Sonnenuntergang“ oder einer Taste kombinieren.
 
 ## Datenschutz
 
