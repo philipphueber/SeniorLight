@@ -18,6 +18,7 @@ the same face does the same, for launchers that do not redraw the swapped icon.
 | `ToggleReceiver` | Target of the widget (toggle) and of the notification's Turn off (its own action, `switchTo(false)`, so a stale notification never switches on), via `goAsync()`. |
 | `BootReceiver` | After a restart or an app update (`MY_PACKAGE_REPLACED`; the update ends the process, so the system turns the light off) the light is off: puts the remembered state, icon and widget back to "off". Acts only on those two actions, since it is exported. |
 | `LightService` | Foreground service (type `specialUse`) that runs only while the light is on. See below. |
+| `StartGate` | Pure: holds back a stop of `LightService` while a `startForegroundService()` is not yet answered by `onStartCommand`. Unit tested. See below. |
 | `LightApp` | Registers a `TorchCallback` for the process lifetime, so the icon follows every change (quick settings, other apps, the system) and the service stops when the light goes off by any route. |
 
 Pure classes have JVM tests in `app/src/test`; Android-facing classes have none.
@@ -83,6 +84,14 @@ process and the light alone.
   do not apply.
 - `specialUse` because no standard type fits; `camera` would need the CAMERA
   permission and a runtime prompt.
+- **Stop before start.** Stopping a service started with
+  `startForegroundService()` before it called `startForeground()` crashes the
+  app ("did not then call Service.startForeground()"); a quick on-off can do
+  that. `LightService` counts the starts `onStartCommand` has not answered yet
+  (`StartGate`, main thread only). A stop meanwhile is remembered instead of
+  sent; `onStartCommand` calls `startForeground` first and then `stopSelf`. A
+  later start cancels the remembered stop. The torch is switched off at once
+  either way; only the service waits.
 - Its notification (with **Turn off**) only shows on Android 13+ if notifications
   are allowed. The app never asks: a tap must only switch the light. The service
   keeps the process alive either way.

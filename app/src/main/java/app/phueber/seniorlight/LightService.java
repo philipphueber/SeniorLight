@@ -23,16 +23,25 @@ public final class LightService extends Service {
     private static final String CHANNEL = "light";
     private static final int NOTIFICATION_ID = 1;
 
+    /** Starts not yet answered by onStartCommand; all calls are on the main thread. */
+    private static final StartGate gate = new StartGate();
+
     static void start(Context ctx) {
         try {
             ctx.startForegroundService(new Intent(ctx, LightService.class));
+            gate.started();
         } catch (RuntimeException e) {
             // Not allowed now: the light still works, only not protected from process death.
         }
     }
 
+    /**
+     * Stops the service. The torch itself is already off by then (callers switch it
+     * first); only the service may have to wait: if a start is still unanswered,
+     * onStartCommand calls startForeground and then stops, see {@link StartGate}.
+     */
     static void stop(Context ctx) {
-        ctx.stopService(new Intent(ctx, LightService.class));
+        if (gate.stop()) ctx.stopService(new Intent(ctx, LightService.class));
     }
 
     @Override
@@ -58,8 +67,11 @@ public final class LightService extends Service {
                 startForeground(NOTIFICATION_ID, n);
             }
         } catch (RuntimeException e) {
+            gate.answered();
             stopSelf();
+            return START_NOT_STICKY;
         }
+        if (gate.answered()) stopSelf(); // the light went off before the service was up
         return START_NOT_STICKY;
     }
 
