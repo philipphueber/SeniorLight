@@ -16,7 +16,7 @@ the same face does the same, for launchers that do not redraw the swapped icon.
 | `AutomationReceiver` | Exported; takes `LIGHT_ON`/`LIGHT_OFF`/`LIGHT_TOGGLE` broadcasts from automation apps and calls `Torch.switchTo`, via `goAsync()`. See "Automation". |
 | `Automation` | Pure: the action names and which command (on/off/toggle) an action stands for, lenient about case and spaces. Unit tested. |
 | `ToggleReceiver` | Target of the widget and of the notification's Turn off; same toggle, via `goAsync()`. |
-| `BootReceiver` | After a restart the light is off: puts the icon and widget back to "off". |
+| `BootReceiver` | After a restart or an app update (`MY_PACKAGE_REPLACED`; the update ends the process, so the system turns the light off) the light is off: puts the remembered state, icon and widget back to "off". Acts only on those two actions, since it is exported. |
 | `LightService` | Foreground service (type `specialUse`) that runs only while the light is on. See below. |
 | `LightApp` | Registers a `TorchCallback` for the process lifetime, so the icon follows every change (quick settings, other apps, the system) and the service stops when the light goes off by any route. |
 

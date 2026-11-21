@@ -5,7 +5,8 @@
     <!-- CameraManager.setTorchMode needs no permission, and the app never opens the
          camera. All three below are install-time permissions (no prompt):
          LightService keeps the process alive while the light is on, and
-         BootReceiver resets the icon and widget to "off" after a restart. -->
+         BootReceiver resets the icon and widget to "off" after a restart
+         (MY_PACKAGE_REPLACED, for the same reset after an update, needs no permission). -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -98,6 +99,8 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- An update ends the process, and the system turns the light off. -->
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 
