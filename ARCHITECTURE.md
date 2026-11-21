@@ -8,14 +8,14 @@ the same face does the same, for launchers that do not redraw the swapped icon.
 
 | Class | Role |
 |---|---|
-| `Torch` | The light, through the platform torch API (`CameraManager.setTorchMode`). Picks the camera, asks the system for the *real* current state (a `TorchCallback` reports it on registration) and switches to the opposite, so the result is right even after a change in quick settings. Remembers the last state and hands it to `AppIcon` and `LightWidget`. |
+| `Torch` | The light, through the platform torch API (`CameraManager.setTorchMode`). Picks the camera, asks the system for the *real* current state (a `TorchCallback` reports it on registration) and switches to the opposite, so the result is right even after a change in quick settings. Switches run one at a time (main-thread queue): two quick taps would otherwise both read "off" before either switched, and both switch on. Remembers the last state and hands it to `AppIcon` and `LightWidget`. |
 | `AppIcon` | Shows the state on the app icon by enabling exactly one of two launcher entries (see below). |
 | `CameraPick` | Pure: which camera's flash to use (back camera first, else any flash, else none). Unit tested. |
 | `ToggleActivity` | Behind the app icon (both launcher entries are aliases of it). Invisible (translucent, no animation): switches the light and finishes. Also takes the three automation actions as an activity start. |
 | `LightWidget` | Optional home-screen widget: one disc showing `ic_launcher_on`/`ic_launcher_off`, a tap goes to `ToggleReceiver`. Redrawn whenever `Torch` remembers a new state; never on a timer (`updatePeriodMillis="0"`). |
 | `AutomationReceiver` | Exported; takes `LIGHT_ON`/`LIGHT_OFF`/`LIGHT_TOGGLE` broadcasts from automation apps and calls `Torch.switchTo`, via `goAsync()`. See "Automation". |
 | `Automation` | Pure: the action names and which command (on/off/toggle) an action stands for, lenient about case and spaces. Unit tested. |
-| `ToggleReceiver` | Target of the widget and of the notification's Turn off; same toggle, via `goAsync()`. |
+| `ToggleReceiver` | Target of the widget (toggle) and of the notification's Turn off (its own action, `switchTo(false)`, so a stale notification never switches on), via `goAsync()`. |
 | `BootReceiver` | After a restart or an app update (`MY_PACKAGE_REPLACED`; the update ends the process, so the system turns the light off) the light is off: puts the remembered state, icon and widget back to "off". Acts only on those two actions, since it is exported. |
 | `LightService` | Foreground service (type `specialUse`) that runs only while the light is on. See below. |
 | `LightApp` | Registers a `TorchCallback` for the process lifetime, so the icon follows every change (quick settings, other apps, the system) and the service stops when the light goes off by any route. |

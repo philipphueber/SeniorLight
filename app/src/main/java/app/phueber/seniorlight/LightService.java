@@ -43,7 +43,7 @@ public final class LightService extends Service {
         ch.setShowBadge(false); // the icon already shows the state; no dot on it
         nm.createNotificationChannel(ch);
 
-        PendingIntent off = ToggleReceiver.intent(this);
+        PendingIntent off = ToggleReceiver.offIntent(this);
         Notification n = new Notification.Builder(this, CHANNEL)
                 .setSmallIcon(R.drawable.ic_flashlight_on)
                 .setContentTitle(getString(R.string.notification_on))

@@ -7,6 +7,7 @@ import android.hardware.camera2.CameraManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,15 @@ final class Torch {
     private static final String KEY_ON = "on";
     /** How long to wait for the system to report the current state before guessing. */
     private static final long STATE_WAIT_MS = 1000;
+
+    /**
+     * Switches waiting for the one in progress (main thread only). A toggle decides
+     * from the state the system reports, which arrives asynchronously; two quick taps
+     * would otherwise both see "off" and both switch on. One after the other, the
+     * second sees the first one's result.
+     */
+    private static final ArrayDeque<Runnable> queue = new ArrayDeque<>();
+    private static boolean busy;
 
     /** The camera whose flash is the flashlight, or null if the phone has none. */
     static String cameraId(CameraManager cm) {
@@ -53,9 +63,28 @@ final class Torch {
      * Switches the light on ({@code want} true), off (false) or to the opposite of
      * what it really is now (null, see {@link #toggle}), then runs {@code done}.
      * Always runs {@code done}. Taps and automation commands all come through here,
-     * so the icon, widget and service follow the same way.
+     * so the icon, widget and service follow the same way. Call on the main thread;
+     * a switch requested while another is in progress runs after it.
      */
     static void switchTo(Context ctx, Boolean want, Runnable done) {
+        queue.add(() -> run(ctx, want, () -> {
+            try {
+                done.run();
+            } finally {
+                busy = false;
+                next();
+            }
+        }));
+        next();
+    }
+
+    private static void next() {
+        if (busy || queue.isEmpty()) return;
+        busy = true;
+        queue.poll().run();
+    }
+
+    private static void run(Context ctx, Boolean want, Runnable done) {
         Context app = ctx.getApplicationContext();
         CameraManager cm = app.getSystemService(CameraManager.class);
         String id = cm == null ? null : cameraId(cm);
