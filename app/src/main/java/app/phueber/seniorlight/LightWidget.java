@@ -4,6 +4,8 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 /**
@@ -13,6 +15,21 @@ import android.widget.RemoteViews;
  * reliably; the app icon works without it.
  */
 public final class LightWidget extends AppWidgetProvider {
+    /**
+     * The widget receiver has to be exported, and APPWIDGET_UPDATE is not a
+     * protected broadcast: any app can send it with extras. Before Android 13
+     * the extras are unparcelled eagerly, so an extra of a class we do not have
+     * throws here and would kill the process, and with it the light.
+     */
+    @Override
+    public void onReceive(Context ctx, Intent intent) {
+        try {
+            super.onReceive(ctx, intent);
+        } catch (RuntimeException e) {
+            Log.w("LightWidget", "Ignored a malformed widget broadcast", e);
+        }
+    }
+
     @Override
     public void onUpdate(Context ctx, AppWidgetManager mgr, int[] ids) {
         // LightApp's torch callback corrects this as soon as the system reports.
