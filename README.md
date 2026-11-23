@@ -26,7 +26,7 @@ settings, and shows "off" again after the phone restarts.
 ## Install
 
 1. Download the latest `SeniorLight-*.apk` from the
-   [Releases](https://github.com/philipphueber/SeniorLight/releases) page on the
+   [Releases](https://github.com/SeniorPhoneKit/SeniorLight/releases) page on the
    phone.
 2. Open it. Android asks whether to allow installing from this source; allow it
    once.
@@ -121,7 +121,7 @@ geschaltet wurde, und zeigt nach einem Neustart wieder „aus“.
 ## Installieren
 
 1. Die neueste `SeniorLight-*.apk` auf der Seite
-   [Releases](https://github.com/philipphueber/SeniorLight/releases) auf dem
+   [Releases](https://github.com/SeniorPhoneKit/SeniorLight/releases) auf dem
    Telefon herunterladen.
 2. Öffnen. Android fragt, ob Installationen aus dieser Quelle erlaubt werden
    sollen; einmal erlauben.
